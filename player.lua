@@ -15,7 +15,7 @@ function Player.new(x, name, color)
         name = name,
         color = color,
         health = 100,
-        punch_time = 0,         -- internal timer for displaying punch
+        punch_time = -2,         -- internal timer for displaying punch
     }
     setmetatable(self, Player)
     return self
@@ -34,7 +34,9 @@ function Player.stop(self)
 end
 
 function Player.punch(self)
-    self.punch_time = 0.25
+    if self.punch_time < -0.75 then
+        self.punch_time = 0.25
+    end
 end
 
 function Player.jump(self)
@@ -74,11 +76,6 @@ function Player.update(self, dt)
 
     -- decay the "punch" timer
     self.punch_time = self.punch_time - dt
-    
-    -- clamp the "punch" timer
-    if self.punch_time <= 0 then
-        self.punch_time = 0
-    end
 end
 
 function Player.draw(self)
