@@ -46,6 +46,10 @@ function Player.stop(p)
     p.vx = 0
 end
 
+function Player.punch(p)
+    p.punch_time = 0.25
+end
+
 function Player.jump(p)
     -- allow jumping if vertical velocity is low
     -- (allows double-jump but requires good timing)
@@ -90,15 +94,6 @@ function Player.update(p, dt)
     end
 end
 
-function Player.onGround(p)
-    max_y = love.graphics.getHeight()
-    return p.y >= max_y - 0.1
-end
-
-function Player.punch(p)
-    p.punch_time = 0.25
-end
-
 function Player.draw(p)
     -- save previous color
     local r, g, b, a = love.graphics.getColor()
@@ -114,6 +109,11 @@ function Player.draw(p)
 
     -- restore previous color
     love.graphics.setColor(r, g, b, a)
+end
+
+function Player.onGround(p)
+    max_y = love.graphics.getHeight()
+    return p.y >= max_y - 0.1
 end
 
 function Player.near(p, o)
